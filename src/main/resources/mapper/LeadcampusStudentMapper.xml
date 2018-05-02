@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f22pkj31.dao.LeadcampusStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.f22pkj31.bean.LeadcampusStudent" >
+    <id column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="student_name" property="studentName" jdbcType="VARCHAR" />
+    <result column="student_num" property="studentNum" jdbcType="VARCHAR" />
+    <result column="student_sex" property="studentSex" jdbcType="INTEGER" />
+    <result column="student_passwd" property="studentPasswd" jdbcType="VARCHAR" />
+    <result column="school_name" property="schoolName" jdbcType="VARCHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="total_mileage" property="totalMileage" jdbcType="DOUBLE" />
+    <result column="total_time" property="totalTime" jdbcType="DOUBLE" />
+    <result column="average_velocity" property="averageVelocity" jdbcType="DOUBLE" />
+    <result column="heart_rate" property="heartRate" jdbcType="INTEGER" />
+    <result column="training_days" property="trainingDays" jdbcType="INTEGER" />
+    <result column="total_calories" property="totalCalories" jdbcType="DOUBLE" />
+    <result column="student_pic" property="studentPic" jdbcType="VARCHAR" />
+    <result column="session_id" property="sessionId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    student_id, student_name, student_num, student_sex, student_passwd, school_name, 
+    phone_num, total_mileage, total_time, average_velocity, heart_rate, training_days, 
+    total_calories, student_pic, session_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f22pkj31.bean.LeadcampusStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leadcampus_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from leadcampus_student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leadcampus_student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.f22pkj31.bean.LeadcampusStudentExample" >
+    delete from leadcampus_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.f22pkj31.bean.LeadcampusStudent" >
+    insert into leadcampus_student (student_id, student_name, student_num, 
+      student_sex, student_passwd, school_name, 
+      phone_num, total_mileage, total_time, 
+      average_velocity, heart_rate, training_days, 
+      total_calories, student_pic, session_id
+      )
+    values (#{studentId,jdbcType=INTEGER}, #{studentName,jdbcType=VARCHAR}, #{studentNum,jdbcType=VARCHAR}, 
+      #{studentSex,jdbcType=INTEGER}, #{studentPasswd,jdbcType=VARCHAR}, #{schoolName,jdbcType=VARCHAR}, 
+      #{phoneNum,jdbcType=VARCHAR}, #{totalMileage,jdbcType=DOUBLE}, #{totalTime,jdbcType=DOUBLE}, 
+      #{averageVelocity,jdbcType=DOUBLE}, #{heartRate,jdbcType=INTEGER}, #{trainingDays,jdbcType=INTEGER}, 
+      #{totalCalories,jdbcType=DOUBLE}, #{studentPic,jdbcType=VARCHAR}, #{sessionId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.f22pkj31.bean.LeadcampusStudent" >
+    insert into leadcampus_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="studentName != null" >
+        student_name,
+      </if>
+      <if test="studentNum != null" >
+        student_num,
+      </if>
+      <if test="studentSex != null" >
+        student_sex,
+      </if>
+      <if test="studentPasswd != null" >
+        student_passwd,
+      </if>
+      <if test="schoolName != null" >
+        school_name,
+      </if>
+      <if test="phoneNum != null" >
+        phone_num,
+      </if>
+      <if test="totalMileage != null" >
+        total_mileage,
+      </if>
+      <if test="totalTime != null" >
+        total_time,
+      </if>
+      <if test="averageVelocity != null" >
+        average_velocity,
+      </if>
+      <if test="heartRate != null" >
+        heart_rate,
+      </if>
+      <if test="trainingDays != null" >
+        training_days,
+      </if>
+      <if test="totalCalories != null" >
+        total_calories,
+      </if>
+      <if test="studentPic != null" >
+        student_pic,
+      </if>
+      <if test="sessionId != null" >
+        session_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="studentName != null" >
+        #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNum != null" >
+        #{studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null" >
+        #{studentSex,jdbcType=INTEGER},
+      </if>
+      <if test="studentPasswd != null" >
+        #{studentPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null" >
+        #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMileage != null" >
+        #{totalMileage,jdbcType=DOUBLE},
+      </if>
+      <if test="totalTime != null" >
+        #{totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="averageVelocity != null" >
+        #{averageVelocity,jdbcType=DOUBLE},
+      </if>
+      <if test="heartRate != null" >
+        #{heartRate,jdbcType=INTEGER},
+      </if>
+      <if test="trainingDays != null" >
+        #{trainingDays,jdbcType=INTEGER},
+      </if>
+      <if test="totalCalories != null" >
+        #{totalCalories,jdbcType=DOUBLE},
+      </if>
+      <if test="studentPic != null" >
+        #{studentPic,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        #{sessionId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.f22pkj31.bean.LeadcampusStudentExample" resultType="java.lang.Integer" >
+    select count(*) from leadcampus_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update leadcampus_student
+    <set >
+      <if test="record.studentId != null" >
+        student_id = #{record.studentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentName != null" >
+        student_name = #{record.studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentNum != null" >
+        student_num = #{record.studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentSex != null" >
+        student_sex = #{record.studentSex,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentPasswd != null" >
+        student_passwd = #{record.studentPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolName != null" >
+        school_name = #{record.schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNum != null" >
+        phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalMileage != null" >
+        total_mileage = #{record.totalMileage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalTime != null" >
+        total_time = #{record.totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="record.averageVelocity != null" >
+        average_velocity = #{record.averageVelocity,jdbcType=DOUBLE},
+      </if>
+      <if test="record.heartRate != null" >
+        heart_rate = #{record.heartRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.trainingDays != null" >
+        training_days = #{record.trainingDays,jdbcType=INTEGER},
+      </if>
+      <if test="record.totalCalories != null" >
+        total_calories = #{record.totalCalories,jdbcType=DOUBLE},
+      </if>
+      <if test="record.studentPic != null" >
+        student_pic = #{record.studentPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sessionId != null" >
+        session_id = #{record.sessionId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update leadcampus_student
+    set student_id = #{record.studentId,jdbcType=INTEGER},
+      student_name = #{record.studentName,jdbcType=VARCHAR},
+      student_num = #{record.studentNum,jdbcType=VARCHAR},
+      student_sex = #{record.studentSex,jdbcType=INTEGER},
+      student_passwd = #{record.studentPasswd,jdbcType=VARCHAR},
+      school_name = #{record.schoolName,jdbcType=VARCHAR},
+      phone_num = #{record.phoneNum,jdbcType=VARCHAR},
+      total_mileage = #{record.totalMileage,jdbcType=DOUBLE},
+      total_time = #{record.totalTime,jdbcType=DOUBLE},
+      average_velocity = #{record.averageVelocity,jdbcType=DOUBLE},
+      heart_rate = #{record.heartRate,jdbcType=INTEGER},
+      training_days = #{record.trainingDays,jdbcType=INTEGER},
+      total_calories = #{record.totalCalories,jdbcType=DOUBLE},
+      student_pic = #{record.studentPic,jdbcType=VARCHAR},
+      session_id = #{record.sessionId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.f22pkj31.bean.LeadcampusStudent" >
+    update leadcampus_student
+    <set >
+      <if test="studentName != null" >
+        student_name = #{studentName,jdbcType=VARCHAR},
+      </if>
+      <if test="studentNum != null" >
+        student_num = #{studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="studentSex != null" >
+        student_sex = #{studentSex,jdbcType=INTEGER},
+      </if>
+      <if test="studentPasswd != null" >
+        student_passwd = #{studentPasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolName != null" >
+        school_name = #{schoolName,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNum != null" >
+        phone_num = #{phoneNum,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMileage != null" >
+        total_mileage = #{totalMileage,jdbcType=DOUBLE},
+      </if>
+      <if test="totalTime != null" >
+        total_time = #{totalTime,jdbcType=DOUBLE},
+      </if>
+      <if test="averageVelocity != null" >
+        average_velocity = #{averageVelocity,jdbcType=DOUBLE},
+      </if>
+      <if test="heartRate != null" >
+        heart_rate = #{heartRate,jdbcType=INTEGER},
+      </if>
+      <if test="trainingDays != null" >
+        training_days = #{trainingDays,jdbcType=INTEGER},
+      </if>
+      <if test="totalCalories != null" >
+        total_calories = #{totalCalories,jdbcType=DOUBLE},
+      </if>
+      <if test="studentPic != null" >
+        student_pic = #{studentPic,jdbcType=VARCHAR},
+      </if>
+      <if test="sessionId != null" >
+        session_id = #{sessionId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.f22pkj31.bean.LeadcampusStudent" >
+    update leadcampus_student
+    set student_name = #{studentName,jdbcType=VARCHAR},
+      student_num = #{studentNum,jdbcType=VARCHAR},
+      student_sex = #{studentSex,jdbcType=INTEGER},
+      student_passwd = #{studentPasswd,jdbcType=VARCHAR},
+      school_name = #{schoolName,jdbcType=VARCHAR},
+      phone_num = #{phoneNum,jdbcType=VARCHAR},
+      total_mileage = #{totalMileage,jdbcType=DOUBLE},
+      total_time = #{totalTime,jdbcType=DOUBLE},
+      average_velocity = #{averageVelocity,jdbcType=DOUBLE},
+      heart_rate = #{heartRate,jdbcType=INTEGER},
+      training_days = #{trainingDays,jdbcType=INTEGER},
+      total_calories = #{totalCalories,jdbcType=DOUBLE},
+      student_pic = #{studentPic,jdbcType=VARCHAR},
+      session_id = #{sessionId,jdbcType=VARCHAR}
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+</mapper>

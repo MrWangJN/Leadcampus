@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.f22pkj31.dao.LeadcampusRunningRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.f22pkj31.bean.LeadcampusRunningRecord" >
+    <id column="record_id" property="recordId" jdbcType="INTEGER" />
+    <result column="studentId" property="studentid" jdbcType="INTEGER" />
+    <result column="location_array" property="locationArray" jdbcType="VARCHAR" />
+    <result column="pace" property="pace" jdbcType="DOUBLE" />
+    <result column="use_time" property="useTime" jdbcType="INTEGER" />
+    <result column="color_array" property="colorArray" jdbcType="VARCHAR" />
+    <result column="distance" property="distance" jdbcType="DOUBLE" />
+    <result column="index_array" property="indexArray" jdbcType="VARCHAR" />
+    <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    <result column="record_img" property="recordImg" jdbcType="VARCHAR" />
+    <result column="sum_distance" property="sumDistance" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    record_id, studentId, location_array, pace, use_time, color_array, distance, index_array, 
+    upload_time, record_img, sum_distance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.f22pkj31.bean.LeadcampusRunningRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from leadcampus_running_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from leadcampus_running_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leadcampus_running_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.f22pkj31.bean.LeadcampusRunningRecordExample" >
+    delete from leadcampus_running_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.f22pkj31.bean.LeadcampusRunningRecord" >
+    insert into leadcampus_running_record (record_id, studentId, location_array, 
+      pace, use_time, color_array, 
+      distance, index_array, upload_time, 
+      record_img, sum_distance)
+    values (#{recordId,jdbcType=INTEGER}, #{studentid,jdbcType=INTEGER}, #{locationArray,jdbcType=VARCHAR}, 
+      #{pace,jdbcType=DOUBLE}, #{useTime,jdbcType=INTEGER}, #{colorArray,jdbcType=VARCHAR}, 
+      #{distance,jdbcType=DOUBLE}, #{indexArray,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP}, 
+      #{recordImg,jdbcType=VARCHAR}, #{sumDistance,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.f22pkj31.bean.LeadcampusRunningRecord" >
+    insert into leadcampus_running_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="studentid != null" >
+        studentId,
+      </if>
+      <if test="locationArray != null" >
+        location_array,
+      </if>
+      <if test="pace != null" >
+        pace,
+      </if>
+      <if test="useTime != null" >
+        use_time,
+      </if>
+      <if test="colorArray != null" >
+        color_array,
+      </if>
+      <if test="distance != null" >
+        distance,
+      </if>
+      <if test="indexArray != null" >
+        index_array,
+      </if>
+      <if test="uploadTime != null" >
+        upload_time,
+      </if>
+      <if test="recordImg != null" >
+        record_img,
+      </if>
+      <if test="sumDistance != null" >
+        sum_distance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordId != null" >
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="studentid != null" >
+        #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="locationArray != null" >
+        #{locationArray,jdbcType=VARCHAR},
+      </if>
+      <if test="pace != null" >
+        #{pace,jdbcType=DOUBLE},
+      </if>
+      <if test="useTime != null" >
+        #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="colorArray != null" >
+        #{colorArray,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        #{distance,jdbcType=DOUBLE},
+      </if>
+      <if test="indexArray != null" >
+        #{indexArray,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null" >
+        #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordImg != null" >
+        #{recordImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sumDistance != null" >
+        #{sumDistance,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.f22pkj31.bean.LeadcampusRunningRecordExample" resultType="java.lang.Integer" >
+    select count(*) from leadcampus_running_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update leadcampus_running_record
+    <set >
+      <if test="record.recordId != null" >
+        record_id = #{record.recordId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentid != null" >
+        studentId = #{record.studentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.locationArray != null" >
+        location_array = #{record.locationArray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pace != null" >
+        pace = #{record.pace,jdbcType=DOUBLE},
+      </if>
+      <if test="record.useTime != null" >
+        use_time = #{record.useTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.colorArray != null" >
+        color_array = #{record.colorArray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.distance != null" >
+        distance = #{record.distance,jdbcType=DOUBLE},
+      </if>
+      <if test="record.indexArray != null" >
+        index_array = #{record.indexArray,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadTime != null" >
+        upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.recordImg != null" >
+        record_img = #{record.recordImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sumDistance != null" >
+        sum_distance = #{record.sumDistance,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update leadcampus_running_record
+    set record_id = #{record.recordId,jdbcType=INTEGER},
+      studentId = #{record.studentid,jdbcType=INTEGER},
+      location_array = #{record.locationArray,jdbcType=VARCHAR},
+      pace = #{record.pace,jdbcType=DOUBLE},
+      use_time = #{record.useTime,jdbcType=INTEGER},
+      color_array = #{record.colorArray,jdbcType=VARCHAR},
+      distance = #{record.distance,jdbcType=DOUBLE},
+      index_array = #{record.indexArray,jdbcType=VARCHAR},
+      upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
+      record_img = #{record.recordImg,jdbcType=VARCHAR},
+      sum_distance = #{record.sumDistance,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.f22pkj31.bean.LeadcampusRunningRecord" >
+    update leadcampus_running_record
+    <set >
+      <if test="studentid != null" >
+        studentId = #{studentid,jdbcType=INTEGER},
+      </if>
+      <if test="locationArray != null" >
+        location_array = #{locationArray,jdbcType=VARCHAR},
+      </if>
+      <if test="pace != null" >
+        pace = #{pace,jdbcType=DOUBLE},
+      </if>
+      <if test="useTime != null" >
+        use_time = #{useTime,jdbcType=INTEGER},
+      </if>
+      <if test="colorArray != null" >
+        color_array = #{colorArray,jdbcType=VARCHAR},
+      </if>
+      <if test="distance != null" >
+        distance = #{distance,jdbcType=DOUBLE},
+      </if>
+      <if test="indexArray != null" >
+        index_array = #{indexArray,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null" >
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="recordImg != null" >
+        record_img = #{recordImg,jdbcType=VARCHAR},
+      </if>
+      <if test="sumDistance != null" >
+        sum_distance = #{sumDistance,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.f22pkj31.bean.LeadcampusRunningRecord" >
+    update leadcampus_running_record
+    set studentId = #{studentid,jdbcType=INTEGER},
+      location_array = #{locationArray,jdbcType=VARCHAR},
+      pace = #{pace,jdbcType=DOUBLE},
+      use_time = #{useTime,jdbcType=INTEGER},
+      color_array = #{colorArray,jdbcType=VARCHAR},
+      distance = #{distance,jdbcType=DOUBLE},
+      index_array = #{indexArray,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+      record_img = #{recordImg,jdbcType=VARCHAR},
+      sum_distance = #{sumDistance,jdbcType=DOUBLE}
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+</mapper>
