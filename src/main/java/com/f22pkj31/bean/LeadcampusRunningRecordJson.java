@@ -21,7 +21,7 @@ public class LeadcampusRunningRecordJson {
 
     private Object[] indexArray;
 
-    private MyDate uploadTime;
+    private Date uploadTime;
 
     private String recordImg;
 
@@ -41,7 +41,7 @@ public class LeadcampusRunningRecordJson {
 		this.colorArray = colorArray;
 		this.distance = record.getDistance();
 		this.indexArray = indexArray;
-		this.uploadTime = new MyDate(record.getUploadTime());
+		this.uploadTime = record.getUploadTime();
 		this.recordImg = record.getRecordImg();
 		this.sumDistance = record.getSumDistance();
 	}

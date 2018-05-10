@@ -2,7 +2,10 @@
 spring:
   profiles:
     active: dev
-
+  servlet:
+    multipart:
+      max-request-size: 100Mb
+      max-file-size: 10Mb
 #公共配置与profiles选择无关
 mybatis:
   typeAliasesPackage: com.f22pkj31.bean
@@ -13,6 +16,10 @@ server:
 web:
 #  upload-path: C:/eclipse/eclipse-jee-oxygen-2-win32-x86_64/boot/leadcompusfile/
   upload-path: /home/tomcat/apache-tomcat-8.5.8/webapps/leadcompusfile/
+logging:
+  level.root: info
+  level.org.springframework.web: debug
+  level.com.f22pkj31: debug
 ---
 
 #开发配置
