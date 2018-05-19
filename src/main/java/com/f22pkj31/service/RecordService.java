@@ -6,6 +6,7 @@ import com.f22pkj31.bean.LeadcampusRunningRecordExample.Criteria;
 import com.f22pkj31.utils.DateUtil;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -15,14 +16,15 @@ import java.util.*;
 public class RecordService extends BaseService {
 
 
-    public int uploadRunningRecord(LeadcampusRunningRecord runningRecord) {
+    public int uploadRunningRecord(LeadcampusRunningRecord runningRecord, HttpSession session) {
         // TODO Auto-generated method stub
         Date[] mouths = DateUtil.getMouths(runningRecord.getUploadTime().getMonth() + 1);
-        runningRecord.setSumDistance(getSumDistanceByStudentId(runningRecord.getStudentid(),mouths) + runningRecord.getDistance());
-        System.out.println(getSumDistanceByStudentId(runningRecord.getStudentid(),mouths) + runningRecord.getDistance());
+        runningRecord.setSumDistance(getSumDistanceByStudentId(runningRecord.getStudentid(), mouths) + runningRecord.getDistance());
+        System.out.println(getSumDistanceByStudentId(runningRecord.getStudentid(), mouths) + runningRecord.getDistance());
         int flag = leadcampusRunningRecordMapper.insertSelective(runningRecord);
         if (flag >= 1) {
             LeadcampusRunningRecordExample example = new LeadcampusRunningRecordExample();
+            session.setAttribute("recordId", runningRecord.getRecordId());
             Criteria criteria = example.createCriteria();
             criteria.andStudentidEqualTo(runningRecord.getStudentid());
 
@@ -54,7 +56,6 @@ public class RecordService extends BaseService {
                 System.out.println(i);
                 if (i <= 1) {
                     leadcampusStudent.setTrainingDays(leadcampusStudent.getTrainingDays() + 1);
-                    System.out.println(leadcampusStudent.getTrainingDays());
                 }
                 return leadcampusStudentMapper.updateByPrimaryKeySelective(leadcampusStudent);
             }
@@ -81,7 +82,7 @@ public class RecordService extends BaseService {
 
     }
 
-    public double getSumDistanceByStudentId(Integer studentId,Date[] mouths) {
+    public double getSumDistanceByStudentId(Integer studentId, Date[] mouths) {
         LeadcampusRunningRecordExample example = new LeadcampusRunningRecordExample();
         Criteria criteria = example.createCriteria();
         criteria.andStudentidEqualTo(studentId);
@@ -91,5 +92,9 @@ public class RecordService extends BaseService {
             return leadcampusRunningRecords.get(0).getSumDistance();
         }
         return 0;
+    }
+
+    public int uploadRunningRecordImage(LeadcampusRunningRecord runningRecord) {
+        return leadcampusRunningRecordMapper.updateByPrimaryKeySelective(runningRecord);
     }
 }

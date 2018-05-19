@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.Map;
 
@@ -21,13 +23,14 @@ public class RecordController extends BaseController {
 
     /**
      * 上传跑步数据
+     *
      * @param Json
      * @param file
      * @return
      */
     @RequestMapping(value = "uploadRunningRecord")
     public Map<String, Object> uploadRunningRecord(String Json,
-                                                   @RequestParam(value = "image", required = false) MultipartFile file) {
+                                                   @RequestParam(value = "image", required = false) MultipartFile file, HttpSession session) {
 
         JSONObject parse = JSONObject.parseObject(Json);
         if (sessionService.equalSessionId(parse.getInteger("studentId"), parse.getString("sessionId"))) {
@@ -47,7 +50,7 @@ public class RecordController extends BaseController {
                     runningRecord.setRecordImg(UploadFile.SERVICEUTL + UploadFile.STUPICURL + file.getOriginalFilename());
                     System.out.println(runningRecord);
                 }
-                if (recordService.uploadRunningRecord(runningRecord) >= 1) {
+                if (recordService.uploadRunningRecord(runningRecord, session) >= 1) {
                     return ReturnUtil.successReturn();
                 } else {
                     return ReturnUtil.failReturn("0011", "上传数据失败");
@@ -61,8 +64,32 @@ public class RecordController extends BaseController {
         }
     }
 
+    @RequestMapping(value = "uploadRunningImage")
+    public Map<String, Object> uploadRunningImage(String sessionId, Integer studentId, @RequestParam(value = "image", required = false) MultipartFile file, HttpSession session) {
+        if (sessionService.equalSessionId(studentId, sessionId)) {
+            if (file != null) {
+                String filePath = UploadFile.URL + UploadFile.STUPICURL + file.getOriginalFilename();
+                try {
+                    file.transferTo(new File(filePath));
+                    LeadcampusRunningRecord runningRecord = new LeadcampusRunningRecord();
+                    runningRecord.setRecordId((Integer) session.getAttribute("recordId"));
+                    runningRecord.setRecordImg(UploadFile.SERVICEUTL + UploadFile.STUPICURL + file.getOriginalFilename());
+                    if (recordService.uploadRunningRecordImage(runningRecord) >= 1) {
+                        return ReturnUtil.successReturn();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return ReturnUtil.failReturn("0003", "图片上传失败");
+                }
+            }
+            return ReturnUtil.failReturn("0003", "图片上传失败");
+        }
+        return ReturnUtil.failReturn("0000", "sessionId不匹配");
+    }
+
     /**
-     *获取跑步数据
+     * 获取跑步数据
+     *
      * @param sessionId
      * @param studentId
      * @param mouth

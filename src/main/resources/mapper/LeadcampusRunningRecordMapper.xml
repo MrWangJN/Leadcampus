@@ -116,7 +116,7 @@
       #{distance,jdbcType=DOUBLE}, #{indexArray,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP}, 
       #{recordImg,jdbcType=VARCHAR}, #{sumDistance,jdbcType=DOUBLE})
   </insert>
-  <insert id="insertSelective" parameterType="com.f22pkj31.bean.LeadcampusRunningRecord" >
+  <insert id="insertSelective" parameterType="com.f22pkj31.bean.LeadcampusRunningRecord" useGeneratedKeys="true" keyProperty="recordId">
     insert into leadcampus_running_record
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="recordId != null" >

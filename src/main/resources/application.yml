@@ -14,14 +14,13 @@ server:
   servlet:
     context-path: /leadcampus
 web:
-#  upload-path: C:/eclipse/eclipse-jee-oxygen-2-win32-x86_64/boot/leadcompusfile/
-  upload-path: /home/tomcat/apache-tomcat-8.5.8/webapps/leadcompusfile/
+  upload-path: C:/2_workspace/6_Files/leadcompusfile/
+#  upload-path: /home/tomcat/apache-tomcat-8.5.8/webapps/leadcompusfile/
 logging:
   level.root: info
   level.org.springframework.web: debug
   level.com.f22pkj31: debug
 ---
-
 #开发配置
 
 spring:
@@ -33,4 +32,7 @@ spring:
     username: root
     password: uAiqwVwjJ8-i
     driver-class-name: com.mysql.jdbc.Driver
+server:
+  tomcat:
+    max-http-post-size: 0
 
