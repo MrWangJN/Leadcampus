@@ -30,7 +30,7 @@ public class RecordController extends BaseController {
      */
     @RequestMapping(value = "uploadRunningRecord")
     public Map<String, Object> uploadRunningRecord(String Json,
-                                                   @RequestParam(value = "image", required = false) MultipartFile file, HttpSession session) {
+                                                   @RequestParam(value = "image", required = false) MultipartFile file) {
 
         JSONObject parse = JSONObject.parseObject(Json);
         if (sessionService.equalSessionId(parse.getInteger("studentId"), parse.getString("sessionId"))) {
@@ -50,7 +50,7 @@ public class RecordController extends BaseController {
                     runningRecord.setRecordImg(UploadFile.SERVICEUTL + UploadFile.STUPICURL + file.getOriginalFilename());
                     System.out.println(runningRecord);
                 }
-                if (recordService.uploadRunningRecord(runningRecord, session) >= 1) {
+                if (recordService.uploadRunningRecord(runningRecord) >= 1) {
                     return ReturnUtil.successReturn();
                 } else {
                     return ReturnUtil.failReturn("0011", "上传数据失败");
@@ -65,14 +65,14 @@ public class RecordController extends BaseController {
     }
 
     @RequestMapping(value = "uploadRunningImage")
-    public Map<String, Object> uploadRunningImage(String sessionId, Integer studentId, @RequestParam(value = "image", required = false) MultipartFile file, HttpSession session) {
+    public Map<String, Object> uploadRunningImage(String sessionId, Integer studentId, @RequestParam(value = "image", required = false) MultipartFile file) {
         if (sessionService.equalSessionId(studentId, sessionId)) {
             if (file != null) {
                 String filePath = UploadFile.URL + UploadFile.STUPICURL + file.getOriginalFilename();
                 try {
                     file.transferTo(new File(filePath));
                     LeadcampusRunningRecord runningRecord = new LeadcampusRunningRecord();
-                    runningRecord.setRecordId((Integer) session.getAttribute("recordId"));
+                    runningRecord.setRecordId(recordService.getRecordIdByStudentId(studentId));
                     runningRecord.setRecordImg(UploadFile.SERVICEUTL + UploadFile.STUPICURL + file.getOriginalFilename());
                     if (recordService.uploadRunningRecordImage(runningRecord) >= 1) {
                         return ReturnUtil.successReturn();

@@ -16,7 +16,7 @@ import java.util.*;
 public class RecordService extends BaseService {
 
 
-    public int uploadRunningRecord(LeadcampusRunningRecord runningRecord, HttpSession session) {
+    public int uploadRunningRecord(LeadcampusRunningRecord runningRecord) {
         // TODO Auto-generated method stub
         Date[] mouths = DateUtil.getMouths(runningRecord.getUploadTime().getMonth() + 1);
         runningRecord.setSumDistance(getSumDistanceByStudentId(runningRecord.getStudentid(), mouths) + runningRecord.getDistance());
@@ -24,7 +24,7 @@ public class RecordService extends BaseService {
         int flag = leadcampusRunningRecordMapper.insertSelective(runningRecord);
         if (flag >= 1) {
             LeadcampusRunningRecordExample example = new LeadcampusRunningRecordExample();
-            session.setAttribute("recordId", runningRecord.getRecordId());
+            redisDao.add(runningRecord.getStudentid().toString(),runningRecord.getRecordId().toString(),1L);
             Criteria criteria = example.createCriteria();
             criteria.andStudentidEqualTo(runningRecord.getStudentid());
 
@@ -96,5 +96,11 @@ public class RecordService extends BaseService {
 
     public int uploadRunningRecordImage(LeadcampusRunningRecord runningRecord) {
         return leadcampusRunningRecordMapper.updateByPrimaryKeySelective(runningRecord);
+    }
+
+    public Integer getRecordIdByStudentId(Integer studentId) {
+        Integer recordId = Integer.valueOf(redisDao.get(studentId.toString()));
+        redisDao.delete(studentId.toString());
+        return recordId;
     }
 }
