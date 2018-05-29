@@ -14,8 +14,8 @@ server:
   servlet:
     context-path: /leadcampus
 web:
-  upload-path: C:/2_workspace/6_Files/leadcompusfile/
-#  upload-path: /home/tomcat/apache-tomcat-8.5.8/webapps/leadcompusfile/
+#  upload-path: C:/2_workspace/6_Files/leadcompusfile/
+  upload-path: /com/f22pkj31/file/leadcompusfile/
 logging:
   level.root: info
   level.org.springframework.web: debug
